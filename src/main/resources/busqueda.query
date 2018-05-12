@@ -1,0 +1,221 @@
+prefix : <http://www.semanticweb.org/ceo/ontologies/2018/4/ontologia-dispositivos#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?dispositivo ?descripcion ?fabricante ?objeto ?accesorio ?os WHERE
+{
+	# Subconsulta que nos permite realizar por el nombre del dispositivo
+  	{
+		?dispositivo a owl:NamedIndividual .
+		FILTER regex(str(?dispositivo), str(?busqueda), "i") .
+		
+		OPTIONAL {
+			?dispositivo rdfs:comment ?descripcion
+		}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :FabricadoPor ;
+	  			owl:someValuesFrom ?fabricante
+	  		]
+	  	}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :Es ;
+	  			owl:someValuesFrom ?objeto
+	  		]
+	  	}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :Tiene ;
+	  			owl:someValuesFrom ?accesorio
+	  		]
+	  	}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :SuSOEs ;
+	  			owl:someValuesFrom ?os
+	  		]
+	  	}
+  	}
+  	
+  	UNION
+  	# Subconsulta que nos permite realizar por la descripcion del dispositivo
+  	{
+		?dispositivo rdfs:comment ?descripcion .
+		FILTER regex(str(?descripcion), str(?busqueda), "i") .
+		
+		OPTIONAL {
+			?dispositivo a owl:NamedIndividual .
+		}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :FabricadoPor ;
+	  			owl:someValuesFrom ?fabricante
+	  		]
+	  	}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :Es ;
+	  			owl:someValuesFrom ?objeto
+	  		]
+	  	}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :Tiene ;
+	  			owl:someValuesFrom ?accesorio
+	  		]
+	  	}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :SuSOEs ;
+	  			owl:someValuesFrom ?os
+	  		]
+	  	}
+  	}
+  	
+  	UNION
+  	
+	# Subconsulta que nos permite realizar una busqueda mediante el nombre del fabricante (relación fabricado por)
+  	{
+  		?fabricante a owl:Class.
+  		?fabricante rdfs:subClassOf :Fabricantes
+		FILTER regex(str(?fabricante), str(?busqueda), "i")
+	
+	  	?dispositivo a [
+  			a owl:Restriction ;
+  			owl:onProperty :FabricadoPor ;
+  			owl:someValuesFrom ?fabricante
+  		]
+  		
+  		OPTIONAL {
+			?dispositivo rdfs:comment ?descripcion
+		}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :Es ;
+	  			owl:someValuesFrom ?objeto
+	  		]
+	  	}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :Tiene ;
+	  			owl:someValuesFrom ?accesorio
+	  		]
+	  	}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :SuSOEs ;
+	  			owl:someValuesFrom ?os
+	  		]
+	  	}
+  	}
+  	
+	UNION
+  	
+	# Subconsulta que nos permite realizar una busqueda por nombre del objeto (relación es)
+  	{
+  		?objeto a owl:Class .
+  		?objeto rdfs:subClassOf :Tipo .
+		FILTER regex(str(?objeto), str(?busqueda), "i")
+		
+  		?dispositivo a [
+  			a owl:Restriction ;
+  			owl:onProperty :Es ;
+  			owl:someValuesFrom ?objeto
+  		]
+  		
+  		OPTIONAL {
+			?dispositivo rdfs:comment ?descripcion
+		}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :FabricadoPor ;
+	  			owl:someValuesFrom ?fabricante
+	  		]
+	  	}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :Tiene ;
+	  			owl:someValuesFrom ?accesorio
+	  		]
+	  	}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :SuSOEs ;
+	  			owl:someValuesFrom ?os
+	  		]
+	  	}
+  	}
+  	
+  	UNION
+  	
+	# Subconsulta que nos permite realizar una busqueda por el sistema operativo (relación "SuSOEs")
+  	{
+  		?os a owl:Class .
+  		?os rdfs:subClassOf :SO .
+		FILTER regex(str(?os), str(?busqueda), "i")
+		
+		?dispositivo a [
+  			a owl:Restriction ;
+  			owl:onProperty :SuSOEs ;
+  			owl:someValuesFrom ?os
+  		]
+  		
+  		OPTIONAL {
+			?dispositivo rdfs:comment ?descripcion
+		}
+		
+  		OPTIONAL {
+  			?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :Es ;
+	  			owl:someValuesFrom ?objeto
+	  		]
+  		}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :FabricadoPor ;
+	  			owl:someValuesFrom ?fabricante
+	  		]
+	  	}
+	
+	  	OPTIONAL {
+	  		?dispositivo a [
+	  			a owl:Restriction ;
+	  			owl:onProperty :Tiene ;
+	  			owl:someValuesFrom ?accesorio
+	  		]
+	  	}
+  	}
+} 

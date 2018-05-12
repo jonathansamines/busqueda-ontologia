@@ -1,0 +1,435 @@
+@prefix : <http://www.semanticweb.org/ceo/ontologies/2018/4/ontologia-dispositivos#>
+@prefix owl: <http://www.w3.org/2002/07/owl#>
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Declaramos la ontología
+: a owl:Ontology .
+
+# Declaramos las propiedades de relación basicas de la ontología
+:Es
+  a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:comment "Se define para afirmar que es un tipo de producto electronico" .
+
+:FabricadoPor a owl:ObjectProperty .
+
+:SuSOEs a owl:ObjectProperty .
+
+:Tiene
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf owl:topObjectProperty .
+
+:Electronicos a owl:Class .
+
+
+# Tipos de Sistemas operativos
+:SO
+  a owl:Class ;
+  rdfs:subClassOf :Electronicos .
+
+:Android
+  a owl:Class ;
+  rdfs:subClassOf :SO .
+  
+ :IOS
+  a owl:Class ;
+  rdfs:subClassOf :SO .
+
+:OSX
+  a owl:Class ;
+  rdfs:subClassOf :SO .
+
+:Windows
+  a owl:Class ;
+  rdfs:subClassOf :SO .
+
+# Fabricantes
+:Fabricantes
+  a owl:Class ;
+  rdfs:subClassOf :Electronicos .
+
+:Apple
+  a owl:Class ;
+  rdfs:subClassOf :Fabricantes .
+
+:DELL
+  a owl:Class ;
+  rdfs:subClassOf :Fabricantes .
+
+:LG
+  a owl:Class ;
+  rdfs:subClassOf :Fabricantes .
+
+:NintendoCo
+  a owl:Class ;
+  rdfs:subClassOf :Fabricantes . 
+
+:Sony
+  a owl:Class ;
+  rdfs:subClassOf :Fabricantes . 
+
+# Tipos de accesorios
+:Accesorios
+  a owl:Class ;
+  rdfs:subClassOf :Electronicos .
+
+:Cargador
+  a owl:Class ;
+  rdfs:subClassOf :Accesorios .
+
+:Maletin
+  a owl:Class ;
+  rdfs:subClassOf :Accesorios .
+
+:Protector
+  a owl:Class ;
+  rdfs:subClassOf :Accesorios .
+
+:Rac
+  a owl:Class ;
+  rdfs:subClassOf :Accesorios .
+
+:Estuche
+  a owl:Class ;
+  rdfs:subClassOf :Accesorios .
+
+# Tipos de dispositivos
+:Tipo
+  a owl:Class ;
+  rdfs:subClassOf :Electronicos .
+
+:Celular
+  a owl:Class ;
+  rdfs:subClassOf :Tipo .
+
+:Laptop
+  a owl:Class ;
+  rdfs:subClassOf :Tipo . 
+
+:Reloj
+  a owl:Class ;
+  rdfs:subClassOf :Tipo .
+
+:TV
+  a owl:Class ;
+  rdfs:subClassOf :Tipo . 
+
+:VideoJuego
+  a owl:Class ;
+  rdfs:subClassOf :Tipo . 
+
+:Alienware a owl:NamedIndividual, :Laptop, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :Laptop
+  ],
+  [
+    a owl:Restriction ;
+    owl:onProperty :FabricadoPor ;
+    owl:someValuesFrom :DELL
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :SuSOEs ;
+    owl:someValuesFrom :Windows
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Cargador
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Estuche
+  ];
+  rdfs:comment "Esta es una computadora para videojuegos".
+
+:AndroidWatch a owl:NamedIndividual, :Reloj, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :Reloj
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :SuSOEs ;
+    owl:someValuesFrom :Android
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Cargador
+  ];
+  rdfs:comment "Un reloj inteligente?" .
+
+:AsusElite a owl:NamedIndividual, :Laptop, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :Laptop
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :FabricadoPor ;
+    owl:someValuesFrom :DELL
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :SuSOEs ;
+    owl:someValuesFrom :Windows
+  ];
+  rdfs:comment "Una laptop de alto rendimiento?".
+
+:CompacCQ550 a owl:NamedIndividual, :Laptop, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :Laptop
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :FabricadoPor ;
+    owl:someValuesFrom :DELL
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :SuSOEs ;
+    owl:someValuesFrom :Windows
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Cargador
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Estuche
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Maletin
+  ];
+  rdfs:comment "Una laptop barata".
+
+:IphoneX
+  a owl:NamedIndividual, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :Celular
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :FabricadoPor ;
+    owl:someValuesFrom :Apple
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :SuSOEs ;
+    owl:someValuesFrom :IOS
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Cargador
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Estuche
+  ] ;
+  owl:sameAs :iphone ;
+  rdfs:comment "Un telefono demasiado caro".
+
+:LG_Smart a owl:NamedIndividual, :TV, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :TV
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :FabricadoPor ;
+    owl:someValuesFrom :LG
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :SuSOEs ;
+    owl:someValuesFrom :Android
+  ];
+  rdfs:comment "Un reloj no tan inteligente".
+
+:LGk10
+  a owl:NamedIndividual, :Celular, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :Celular
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :SuSOEs ;
+    owl:someValuesFrom :Android
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Estuche
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Protector
+  ] ;
+  owl:sameAs :Mate9Pro, :Xiaomi;
+  rdfs:comment "Bueno, bonito y barato".
+
+:Mate9Pro a owl:NamedIndividual, :Celular, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :Electronicos
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :FabricadoPor ;
+    owl:someValuesFrom :Sony
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :SuSOEs ;
+    owl:someValuesFrom :Android
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Cargador
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Estuche
+  ];
+  rdfs:comment "Otro telefono".
+
+:Switch a owl:NamedIndividual, :VideoJuego, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :VideoJuego
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :FabricadoPor ;
+    owl:someValuesFrom :NintendoCo
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Cargador
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Protector
+  ];
+  rdfs:comment "La nueva consola de Nintendo".
+
+:PS3 a owl:NamedIndividual, :VideoJuego, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :VideoJuego
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Estuche
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :FabricadoPor ;
+    owl:someValuesFrom :Sony
+  ];
+  rdfs:comment "Una consola del pasado".
+
+:PS4 a owl:NamedIndividual, :VideoJuego, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :VideoJuego
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :FabricadoPor ;
+    owl:someValuesFrom :Sony
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Estuche
+  ];
+  rdfs:comment "Una consola del presente".
+
+:Smart_TV a owl:NamedIndividual, :TV, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :TV
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :FabricadoPor ;
+    owl:someValuesFrom :Sony
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :SuSOEs ;
+    owl:someValuesFrom :Android
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Rac
+  ];
+  rdfs:comment "Las televisiones son inteligentes?".
+
+:ToshibaLatitude a owl:NamedIndividual, :Laptop, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :Laptop
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :FabricadoPor ;
+    owl:someValuesFrom :Sony
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :SuSOEs ;
+    owl:someValuesFrom :Windows
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Cargador
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Estuche
+  ];
+  rdfs:comment "Una buena laptop?".
+
+:Xiaomi a owl:NamedIndividual, :Celular, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :Celular
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :FabricadoPor ;
+    owl:someValuesFrom :Sony
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :SuSOEs ;
+    owl:someValuesFrom :Android
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Cargador
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Estuche
+  ];
+  rdfs:comment "Telefono chino".
+
+:iWatch a owl:NamedIndividual, :Reloj, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :Reloj
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :SuSOEs ;
+    owl:someValuesFrom :IOS
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Cargador
+  ];
+  rdfs:comment "Un reloj muy caro".
+
+:iphone a owl:NamedIndividual, [
+    a owl:Restriction ;
+    owl:onProperty :Es ;
+    owl:someValuesFrom :Celular
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :FabricadoPor ;
+    owl:someValuesFrom :Apple
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :SuSOEs ;
+    owl:someValuesFrom :IOS
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Cargador
+  ], [
+    a owl:Restriction ;
+    owl:onProperty :Tiene ;
+    owl:someValuesFrom :Estuche
+  ];
+  rdfs:comment "Un telefono viejo y caro".
